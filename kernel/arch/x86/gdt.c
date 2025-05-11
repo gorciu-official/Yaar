@@ -31,7 +31,7 @@ void KiSetGdtTablePtr() {
     gdt_ptr.base = (uint32_t)&gdt;
 }
 
-void init_gdt() {
+void KiInitGdt() {
     KiSetGdtTableEntry(0, 0, 0, 0, 0);  
     KiSetGdtTableEntry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); 
     KiSetGdtTableEntry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
