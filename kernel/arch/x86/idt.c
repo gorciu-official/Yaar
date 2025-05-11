@@ -28,7 +28,7 @@ void KiSetIdtTablePtr() {
     idt_ptr.base = (uint32_t)&idt;
 }
 
-void init_idt() {
+void KiIdtInit() {
     KiSetIdtTablePtr();
     KiFlushIdtTable((uint32_t)&idt_ptr);
 }

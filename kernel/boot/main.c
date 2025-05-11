@@ -11,6 +11,7 @@
 
 #include <types.h>
 #include <architectures.h>
+#include <arch/x86.h>
 
 OSENTRY void KiBootOS() {
     SystemArchitecture arch = KiDetectArchitecture();
@@ -23,8 +24,25 @@ OSENTRY void KiBootOS() {
         return;
     }
 
-    bool arch_x86_like = arch == x32 || arch == x64;
-    bool arch_long_mode_capable = arch == x64;
+    if (arch == x32 || arch == x64) {
+        KiInitGdt();
+        KiInitIdt();
+        KiEnterProtectedMode();
+    }
 
+    return;
+}
+
+void KiSystemReady() {
+    // is OS really ready?
+    static int execution_times = 0;
+    execution_times++;
+    if (KiDetectArchitecture() == x64 && execution_times == 1) {
+        // we need to initialize now long mode from protected
+        // i will do it later
+        return;
+    }
+
+    // now it is ready
     return;
 }

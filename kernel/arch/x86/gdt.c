@@ -41,3 +41,8 @@ void KiInitGdt() {
     KiSetGdtTablePtr();
     KiFlushGdtTable((uint32_t)&gdt_ptr);
 }
+
+void KiRealInitGdt() {
+    asm volatile("lgdt (%0)" : : "r"(&gdt_ptr));
+    return;
+}
