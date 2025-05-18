@@ -65,7 +65,7 @@ void vga_put_char(char c, int color) {
     vga_update_cursor();
 }
 
-void vga_print(const char* str, int color) {
+void vga_printstr(const char* str, int color) {
     while (*str) {
         vga_put_char(*str++, color);
     }
