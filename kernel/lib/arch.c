@@ -12,7 +12,7 @@
 #include <types.h>
 #include <architectures.h>
 
-SystemArchitecture KiDetectArchitecture() {
+SystemArchitecture arch_detect() {
     #ifdef __x86_64__
         return x64;
     #endif

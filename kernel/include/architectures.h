@@ -12,4 +12,4 @@
 #pragma once
 
 typedef enum { UnknownArchitecture, x64, x32, ARM, AArch64 } SystemArchitecture;
-extern SystemArchitecture KiDetectArchitecture();
+extern SystemArchitecture arch_detect();

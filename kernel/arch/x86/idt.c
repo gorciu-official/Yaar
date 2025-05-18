@@ -12,10 +12,10 @@
 #include <types.h>
 #include "idt.h"
 
-IdtTableEntry idt[IDT_ENTRIES];
-IdtTablePtr idt_ptr; 
+idt_entry_t idt[IDT_ENTRIES];
+idt_ptr_t idt_ptr; 
 
-void KiSetIdtTableEntry(int num, uint32_t base, uint16_t selector, uint8_t type_attr) {
+void set_idt_entry(int num, uint32_t base, uint16_t selector, uint8_t type_attr) {
     idt[num].offset_low = base & 0xFFFF;
     idt[num].offset_high = (base >> 16) & 0xFFFF;
     idt[num].selector = selector;
@@ -23,12 +23,12 @@ void KiSetIdtTableEntry(int num, uint32_t base, uint16_t selector, uint8_t type_
     idt[num].type_attr = type_attr;
 }
 
-void KiSetIdtTablePtr() {
-    idt_ptr.limit = (sizeof(IdtTableEntry) * IDT_ENTRIES) - 1;
+void set_idt_ptr() {
+    idt_ptr.limit = (sizeof(idt_entry_t) * IDT_ENTRIES) - 1;
     idt_ptr.base = (uint32_t)&idt;
 }
 
-void KiIdtInit() {
-    KiSetIdtTablePtr();
-    KiFlushIdtTable((uint32_t)&idt_ptr);
+void init_idt() {
+    set_idt_ptr();
+    flush_idt((uint32_t)&idt_ptr);
 }

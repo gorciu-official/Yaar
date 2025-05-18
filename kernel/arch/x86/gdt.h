@@ -22,11 +22,11 @@ typedef struct {
     uint8_t access; 
     uint8_t granularity;
     uint8_t base_high;
-} __attribute__((packed)) GdtTableEntry;
+} __attribute__((packed)) gdt_entry_t;
 
 typedef struct {
     uint16_t limit; 
     uint32_t base; 
-} __attribute__((packed)) GdtTablePtr;
+} __attribute__((packed)) gdt_ptr_t;
 
-extern void KiFlushGdtTable(uint32_t);
+extern void flush_gdt(uint32_t);

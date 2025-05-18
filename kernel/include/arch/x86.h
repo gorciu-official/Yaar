@@ -11,6 +11,6 @@
 
 #include <types.h>
 
-extern void KiInitGdt();
-extern void KiInitIdt();
-extern void KiEnterProtectedMode();
+extern void init_gdt();
+extern void init_idt();
+extern void enter_protected_mode();

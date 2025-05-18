@@ -3,22 +3,22 @@
 
 bits 16
 
-extern KiRealInitGdt
+extern real_init_gdt
 ; ^ that shit executes lgdt
-extern KiSystemReady
+extern main
 
-global KiFlushGdtTable
-KiFlushGdtTable:
+global flush_gdt
+flush_gdt:
     lgdt [eax]
     ret
 
-global KiFlushIdtTable
-KiFlushIdtTable:
+global flush_idt
+flush_idt:
     lidt [eax]
     ret
 
-global KiEnterProtectedMode
-KiEnterProtectedMode:
+global enter_protected_mode
+enter_protected_mode:
     cli
 
     mov 0x20, ax
@@ -26,9 +26,9 @@ KiEnterProtectedMode:
     mov 0xD1, al
     out al, 0x64
 
-    call KiRealInitGdt
+    call real_init_gdt
     mov cr0, eax
     or 0x1, eax
     mov eax, cr0
 
-    jmp 0x08, KiSystemReady
+    jmp dword 0x08:main

@@ -12,10 +12,10 @@
 #include <types.h>
 #include "gdt.h"
 
-GdtTableEntry gdt[GDT_ENTRIES];
-GdtTablePtr gdt_ptr;
+gdt_entry_t gdt[GDT_ENTRIES];
+gdt_ptr_t gdt_ptr;
 
-void KiSetGdtTableEntry(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity) {
+void set_gdt_entry(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity) {
     gdt[num].base_low = base & 0xFFFF;
     gdt[num].base_middle = (base >> 16) & 0xFF;
     gdt[num].base_high = (base >> 24) & 0xFF;
@@ -26,23 +26,23 @@ void KiSetGdtTableEntry(int num, uint32_t base, uint32_t limit, uint8_t access, 
     gdt[num].access = access;
 }
 
-void KiSetGdtTablePtr() {
-    gdt_ptr.limit = (sizeof(GdtTableEntry) * GDT_ENTRIES) - 1;
+void set_gdt_ptr() {
+    gdt_ptr.limit = (sizeof(gdt_entry_t) * GDT_ENTRIES) - 1;
     gdt_ptr.base = (uint32_t)&gdt;
 }
 
-void KiInitGdt() {
-    KiSetGdtTableEntry(0, 0, 0, 0, 0);  
-    KiSetGdtTableEntry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); 
-    KiSetGdtTableEntry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
-    KiSetGdtTableEntry(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
-    KiSetGdtTableEntry(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); 
+void init_gdt() {
+    set_gdt_entry(0, 0, 0, 0, 0);  
+    set_gdt_entry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); 
+    set_gdt_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+    set_gdt_entry(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+    set_gdt_entry(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); 
 
-    KiSetGdtTablePtr();
-    KiFlushGdtTable((uint32_t)&gdt_ptr);
+    set_gdt_ptr();
+    flush_gdt((uint32_t)&gdt_ptr);
 }
 
-void KiRealInitGdt() {
+void real_init_gdt() {
     asm volatile("lgdt (%0)" : : "r"(&gdt_ptr));
     return;
 }

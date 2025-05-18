@@ -21,11 +21,11 @@ typedef struct {
     uint8_t zero; 
     uint8_t type_attr;
     uint16_t offset_high; 
-} __attribute__((packed)) IdtTableEntry;
+} __attribute__((packed)) idt_entry_t;
 
 typedef struct {
     uint16_t limit;
     uint32_t base; 
-} __attribute__((packed)) IdtTablePtr;
+} __attribute__((packed)) idt_ptr_t;
 
-extern void KiFlushIdtTable(uint32_t);
+extern void flush_idt(uint32_t);
