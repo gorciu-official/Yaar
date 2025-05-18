@@ -12,8 +12,7 @@
 #pragma once
 
 /**
- * just for finding quickly OS entries for specific
- * architectures.
+ * just for finding quickly OS entries for specific architectures.
  */
 #define OSENTRY
 

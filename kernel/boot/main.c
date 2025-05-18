@@ -12,6 +12,7 @@
 #include <types.h>
 #include <architectures.h>
 #include <arch/x86.h>
+#include <drivers/screen.h>
 
 OSENTRY void early_main() {
     SystemArchitecture arch = arch_detect();
@@ -38,8 +39,6 @@ void main() {
     static int execution_times = 0;
     execution_times++;
     if (arch_detect() == x64 && execution_times == 1) {
-        
-        return;
     }
 
     // now it is ready
