@@ -38,8 +38,7 @@ void main() {
     static int execution_times = 0;
     execution_times++;
     if (arch_detect() == x64 && execution_times == 1) {
-        // we need to initialize now long mode from protected
-        // i will do it later
+        
         return;
     }
 
